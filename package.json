@@ -1,0 +1,37 @@
+{
+  "name": "graphql-database",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/APlusPlus-LMS/LMS-Database-Endpoint.git"
+  },
+  "keywords": [
+    "Database",
+    "MongoDB",
+    "GraphQL",
+    "Mongoose",
+    "REST"
+  ],
+  "author": "A Plus Plus Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/APlusPlus-LMS/LMS-Database-Endpoint/issues"
+  },
+  "homepage": "https://github.com/APlusPlus-LMS/LMS-Database-Endpoint#readme",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.6.5",
+    "typescript": "^4.8.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
+    "eslint": "^8.25.0"
+  }
+}
