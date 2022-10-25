@@ -70,10 +70,10 @@ export interface IEvaluation {
 
 // Schemas
 const evaluationSchema = new Schema<IEvaluation>({
-    name: String,
-    result: Number,
-    weighting: Number,
-    deadline: Date
+    name: {type: String, required: true},
+    result: {type: Number, required: true},
+    weighting: {type: Number, required: true},
+    deadline: {type: Date, required: true}
 });
 
 const userSchema = new Schema<IUser>({
@@ -93,13 +93,15 @@ const postSchema = new Schema<IPost>({
     attachments: [String],
     priority: {
         type: String,
-        enum: ["NONE", "IMPORTANT", "URGENT"]
+        enum: ["NONE", "IMPORTANT", "URGENT"],
+        required: true
     },
     assessmentInfo: [{
-        assessmentId: String,
+        assessmentId: {type: String, required: true},
         type: {
             type: String,
-            enum: ["HOMEWORK", "QUIZ", "EXAM"]
+            enum: ["HOMEWORK", "QUIZ", "EXAM"],
+            required: true
         }
     }]
 });
@@ -137,9 +139,9 @@ const courseSchema = new Schema<ICourse>({
     posts: [postSchema],
     assignments: [evaluationSchema],
     scheduled_times: [{
-        weekday: Number,
-        startTime: Number, // 0-23
-        classTimeMinutes: Number
+        weekday: {type: Number, required: true},
+        startTime: {type: Number, required: true}, // 0-23
+        classTimeMinutes: {type: Number, required: true}
     }]
 });
 
