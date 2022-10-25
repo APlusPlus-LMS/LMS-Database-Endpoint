@@ -76,4 +76,85 @@ const evaluationSchema = new Schema<IEvaluation>({
     deadline: Date
 });
 
+const userSchema = new Schema<IUser>({
+    firstname: {type: String, required: true},
+    lastname: {type: String, required: true},
+    email: {type: String, required: true},
+    role: {
+        type: String,
+        enum: ["STUDENT", "PROFESSOR", "STAFF"],
+        required: true
+    }
+});
+
+const postSchema = new Schema<IPost>({
+    title: {type: String, required: true},
+    body: {type: String, required: true},
+    attachments: [String],
+    priority: {
+        type: String,
+        enum: ["NONE", "IMPORTANT", "URGENT"]
+    },
+    assessmentInfo: [{
+        assessmentId: String,
+        type: {
+            type: String,
+            enum: ["HOMEWORK", "QUIZ", "EXAM"]
+        }
+    }]
+});
+
+const courseGradeSchema = new Schema<ICourseGrades>({
+    courseId: {type: String, required: true},
+    evaluations: [evaluationSchema]
+});
+
+const studentSchema = new Schema<IStudent>({
+    firstname: {type: String, required: true},
+    lastname: {type: String, required: true},
+    email: {type: String, required: true},
+    role: {
+        type: String,
+        enum: ["STUDENT", "PROFESSOR", "STAFF"]
+    },
+    studentId: {type: String, required: true},
+    grades: [courseGradeSchema],
+});
+
+const communitySchema = new Schema<ICommunity>({
+    title: {type: String, required: true},
+    administrators: [userSchema],
+    members: [studentSchema],
+    posts: [postSchema]
+});
+
+
+const courseSchema = new Schema<ICourse>({
+    code: {type: String, required: true},
+    title: {type: String, required: true},
+    administrators: [userSchema],
+    students: [studentSchema],
+    posts: [postSchema],
+    assignments: [evaluationSchema],
+    scheduled_times: [{
+        weekday: Number,
+        startTime: Number, // 0-23
+        classTimeMinutes: Number
+    }]
+});
+
+const programSchema = new Schema<IProgram>({
+    courses: [courseSchema],
+    students: [studentSchema],
+    staff: [userSchema],
+    years: {type: Number, required: true},
+    current_year: {type: Number, required: true}
+});
+
 // Models
+export const ProgramModel = model("Program", programSchema);
+export const CommunityModel = model("Community", communitySchema);
+export const StudentModel = model("Student", studentSchema);
+export const CourseModel = model("Course", courseSchema);
+export const PostModel = model("Post", postSchema);
+export const EvaluationModel = model("Evaluation", evaluationSchema);
