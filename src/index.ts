@@ -1,36 +1,14 @@
-import express from "express";
-import { graphqlHTTP } from "express-graphql";
-import {
-    GraphQLSchema,
-    GraphQLObjectType,
-    GraphQLString,
-    GraphQLList
-} from "graphql";
 import dotenv from "dotenv";
-
+import { connect } from "mongoose";
 dotenv.config();
 
-const PORT = process.env.PORT || 8000;
-const app = express();
 
-const RootQueryType = new GraphQLObjectType({
-    name: "Query",
-    description: "Root Query",
-    fields: () => ({
-        books: {
-            type: ProgramType,
-            description: "List of programs",
-            resolve: () =>
+export async function connectDB() {
+    return new Promise((resolve, reject) => {
+        if (process.env.MONGODB_URI === undefined) {
+            return reject("MONGODB_URI not set, please provide a valid database url.");
         }
-    }),
-})
 
-app.use("/graphql", graphqlHTTP({
-    graphiql: true,
-    schema
-}));
-
-app.listen(
-    PORT,
-    () => console.log(`App listening on port ${PORT}`)
-);
+        connect(process.env.MONGODB_URI).then(resolve).catch(reject);
+    });
+}
